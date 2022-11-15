@@ -62,6 +62,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
+# auth config
+AUTH_USER_MODEL = 'main.CustomeUser'
+LOGIN_URL = 'login/'
+LOGOUT_REDIRECT_URL = 'login/'
+LOGIN_REDIRECT_URL = ''
+
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
