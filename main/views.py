@@ -25,7 +25,7 @@ def login_page(request):
         if password:
             user = authenticate(request, email=email, password=password)
             login(request, user)
-            return redirect('main:mainpage')
+            return redirect('mainpage')
         else:
             context['emp_pass'] = 'Password required'
 
