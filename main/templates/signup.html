@@ -4,13 +4,13 @@
 
 {% block content %}
 <div class="container">
-    <h3 class="d-flex justify-content-center mb-4">Registration</h3>
+    <h3 class="d-flex justify-content-center mb-4 p-2 m-4">Registration</h3>
     <form method="post" action=".">
         {% csrf_token %}
-        <div class="form-outline col-4 mx-auto mb-2">
+        <div class="form-outline col-4 mx-auto mb-3">
             <input type="text" name="email" class="form-control" placeholder="Email Address *" />
         </div>
-        <div class="form-outline col-4 mx-auto mb-3">
+        <div class="form-outline col-4 mx-auto mb-1">
             <input type="password" name="password1" class="form-control" placeholder="Password *" />
         </div>
         <div class="form-outline col-4 mx-auto mb-3">
@@ -21,13 +21,23 @@
                 <p>* {{ val_err }}</p>
             </div>
         {% endif %}
-        {% if emp_pass %}
+        {% if pass_err %}
             <div class="d-grid gap-2 col-4 mx-auto mb-4">
                 <p>* {{ pass_err }}</p>
             </div>
         {% endif %}
-        <div class="d-grid gap-2 col-4 mx-auto">
-            <button class="btn btn-primary btn-block px-5 mb-4" type="submit">SIGN UP</button>
+        {% if form.errors %}
+        {% for f in form %}
+            {% for e in f.errors %}
+                <div class="d-grid gap-2 col-4 mx-auto">
+                    <p>* {{ e|escape }}</p>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        {% endif %}
+        <div class="d-flex justify-content-between gap-2 col-4 mx-auto">
+            <button class="btn btn-primary btn-block px-5" type="submit">SIGN UP</button>
+            <a class="btn btn-warning btn-block" href="{% url 'login' %}">BACK</a>
         </div>
     </form>
 </div>

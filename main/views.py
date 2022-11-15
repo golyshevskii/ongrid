@@ -39,7 +39,7 @@ def login_page(request):
 
 def signup_page(request):
     """Function for render and validate sign up process"""
-    
+
     context = {'val_err': None, 'pass_err': None, 'form': None}
 
     if request.method == 'POST':
@@ -52,15 +52,17 @@ def signup_page(request):
         except ValidationError:
             context['val_err'] = 'Email Address is not valid'
 
-        if (password1 and password2 and password1 != password2) or (password1 is None or password2 is None):
+        if password1 and password2 and password1 != password2:
             form = SignUpForm()
-            context['pass_err'] = "Passwords don't match or they are empty"    
+            context['pass_err'] = "Passwords don't match"
+        elif not password1 or not password2:
+            form = SignUpForm()
+            context['pass_err'] = "Passwords are empty"
         else:
             form = SignUpForm(request.POST)
 
             if form.is_valid():
                 form.save()
-
                 return redirect('mainpage')
 
         context['form'] = form
