@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-from .forms import SignUpForm
+from .forms import SignUpForm, LoginForm
 from .models import CustomeUser
 
 
@@ -27,11 +27,12 @@ def logout_page(request):
 def login_page(request):
     """Function for render and validate login process"""
 
-    context = {'val_err': None, 'emp_pass': None}
+    context = {'val_err': None, 'emp_pass': None, 'form': None}
 
     if request.method == 'POST':
+        form = LoginForm(request.POST)
+
         email = request.POST['email']
-        password = request.POST['password']
 
         try:
             validate_email(email)
@@ -43,12 +44,18 @@ def login_page(request):
         except:
             messages.info(request, 'Username does not exist!')
 
-        if password and user:
-            user = authenticate(request, email=email, password=password)
+        if form.is_valid():
+            cd = form.cleaned_data
+
+            user = authenticate(username=cd['email'], password=cd['password'])
             login(request, user)
             return redirect('mainpage')
         else:
             context['emp_pass'] = 'Password required'
+    else:
+        form = LoginForm()
+    
+    context['form'] = form
 
     return render(request, 'login.html', context=context)
 
