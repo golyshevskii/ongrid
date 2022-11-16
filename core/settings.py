@@ -65,8 +65,8 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # auth config
 AUTH_USER_MODEL = 'main.CustomeUser'
 LOGIN_URL = 'login/'
-LOGOUT_REDIRECT_URL = 'login/'
-LOGIN_REDIRECT_URL = ''
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'
 
 
 # Database

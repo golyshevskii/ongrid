@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from .forms import SignUpForm
@@ -11,6 +12,15 @@ def main_page(request):
     """Function for rendering main page"""
 
     return render(request, 'base.html')
+
+
+@login_required(login_url='/login/')
+def logout_page(request):
+    """Function for render logout process"""
+    
+    logout(request)
+    messages.info(request, "Logged out successfully!")
+    return redirect("mainpage")
 
 
 def login_page(request):
