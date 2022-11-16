@@ -26,7 +26,7 @@ class CustomeManager(BaseUserManager):
 class CustomeUser(AbstractUser):
     """Custome user model with email main username field"""
 
-    name = None
+    username = None
     email = models.CharField(max_length=255, unique=True, verbose_name='Email')
     is_active = models.BooleanField(default=True, verbose_name='Is Active')
 
