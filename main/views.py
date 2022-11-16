@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from .forms import SignUpForm
+from .models import CustomeUser
 
 
 @login_required(login_url='/login/')
@@ -37,7 +38,12 @@ def login_page(request):
         except ValidationError:
             context['val_err'] = 'Email Address is not valid'
 
-        if password:
+        try:
+            user = CustomeUser.objects.get(email=email)
+        except:
+            messages.info(request, 'Username does not exist!')
+
+        if password and user:
             user = authenticate(request, email=email, password=password)
             login(request, user)
             return redirect('mainpage')
