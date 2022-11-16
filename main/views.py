@@ -73,6 +73,7 @@ def signup_page(request):
 
             if form.is_valid():
                 form.save()
+                messages.info(request, "Sign up successfully!")
                 return redirect('mainpage')
 
         context['form'] = form

@@ -15,6 +15,13 @@
 
 <body>
     <div class="col-auto col-sm-auto col-md-auto col-lg-auto col-xl-auto col-xxl-auto">
+        {% for msg in messages %}
+        <div class="container-fluid p-0">
+            <div class="d-flex justify-content-center alert alert-success" role="alert" >
+              {{ msg }}
+            </div>
+        </div>
+        {% endfor %}
         {% if request.user.is_authenticated %}
         <nav class="navbar navbar-expand-lg navbar-light bg-primary">
             <div class="container-fluid">
